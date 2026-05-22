@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta http-equiv="refresh" content="30">
+
+    <title>Dashboard</title>
+
+    <style>
+
+        body {
+            background-color: #0f172a;
+            color: white;
+            font-family: Arial;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1e293b;
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #334155;
+            text-align: center;
+        }
+
+        th {
+            background-color: #111827;
+        }
+
+        .green {
+            color: #22c55e;
+        }
+
+        .yellow {
+            color: #eab308;
+        }
+
+        .red {
+            color: #ef4444;
+        }
+
+        .logout {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: white;
+            text-decoration: none;
+            background-color: #2563eb;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<a href="/logout" class="logout">
+    Logout
+</a>
+
+<h1>Netværk Dashboard</h1>
+
+<table>
+
+<tr>
+    <th>Device</th>
+    <th>IP-Adresse</th>
+    <th>Ping</th>
+    <th>Status</th>
+</tr>
+
+{% for device in devices %}
+
+<tr>
+
+    <td>{{ device[0] }}</td>
+
+    <td>{{ device[1] }}</td>
+
+    <td>
+
+        {% if device[2] == None %}
+
+            <span class="red">
+                Offline
+            </span>
+
+        {% elif device[2] < 20 %}
+
+            <span class="green">
+                {{ device[2] }} ms
+            </span>
+
+        {% elif device[2] <= 100 %}
+
+            <span class="yellow">
+                {{ device[2] }} ms
+            </span>
+
+        {% else %}
+
+            <span class="red">
+                {{ device[2] }} ms
+            </span>
+
+        {% endif %}
+
+    </td>
+
+    <td>
+
+        {% if device[2] == None %}
+
+            <span class="red">
+                Offline
+            </span>
+
+        {% elif device[2] > 100 %}
+
+            <span class="red">
+                Offline
+            </span>
+
+        {% else %}
+
+            <span class="green">
+                Online
+            </span>
+
+        {% endif %}
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+</html>
